@@ -46,7 +46,7 @@ def train(**kwargs):
                                   pin_memory=True,
                                   num_workers=opt.num_workers)
 
-    target_img_path = 'target_img.jpg'
+    target_img_path = 'lokit_target_img.jpg'
     target_img = read_image(target_img_path) / 255
     target_img = torch.from_numpy(pytorch_normalze(target_img))
     target_img = torch.unsqueeze(target_img, 0).numpy()
@@ -92,14 +92,14 @@ def train(**kwargs):
 
                 # plot loss
                 # trainer.vis.plot_many(trainer.get_meter_data())
-                trainer.vis.plot_many(trainer.get_meter_data(BR=True))
+                #trainer.vis.plot_many(trainer.get_meter_data(BR=True))
 
                 # plot groud truth bboxes
                 ori_img_ = inverse_normalize(at.tonumpy(img[0]))
                 gt_img = visdom_bbox(ori_img_,
                                      at.tonumpy(bbox_[0]),
                                      at.tonumpy(label_[0]))
-                trainer.vis.img('gt_img', gt_img)
+                #trainer.vis.img('gt_img', gt_img)
 
                 # plot predicted bboxes
                 _bboxes, _labels, _scores = trainer.faster_rcnn.predict([ori_img_], visualize=True)
@@ -107,7 +107,7 @@ def train(**kwargs):
                                        at.tonumpy(_bboxes[0]),
                                        at.tonumpy(_labels[0]).reshape(-1),
                                        at.tonumpy(_scores[0]))
-                trainer.vis.img('pred_img', pred_img)
+                #trainer.vis.img('pred_img', pred_img)
                 if trainer.attacker is not None:
                     adv_img = trainer.attacker.perturb(img, rois=rois, roi_scores=roi_scores)
                     adv_img_ = inverse_normalize(at.tonumpy(adv_img[0]))
@@ -116,11 +116,11 @@ def train(**kwargs):
                                                at.tonumpy(_bboxes[0]),
                                                at.tonumpy(_labels[0]).reshape(-1),
                                                at.tonumpy(_scores[0]))
-                    trainer.vis.img('adv_img', adv_pred_img)
+                    #trainer.vis.img('adv_img', adv_pred_img)
                 # rpn confusion matrix(meter)
-                trainer.vis.text(str(trainer.rpn_cm.value().tolist()), win='rpn_cm')
+                #trainer.vis.text(str(trainer.rpn_cm.value().tolist()), win='rpn_cm')
                 # roi confusion matrix
-                trainer.vis.img('roi_cm', at.totensor(trainer.roi_cm.conf, False).float())
+                #trainer.vis.img('roi_cm', at.totensor(trainer.roi_cm.conf, False).float())
 
             if ii % 500 == 0 and ii != 0:
                 best_path = trainer.save(epochs=ii, save_rcnn=False)

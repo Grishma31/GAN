@@ -126,9 +126,10 @@ class BRFasterRcnnTrainer(nn.Module):
 
         # 创造钩子函数,记录featureamp的值
         features = self.faster_rcnn.extractor(imgs)
+        print("Feature maps rcnn")
         feature_maps = self.faster_rcnn.feature_maps
 
-        if not features.sum()[0] == 0:
+        if not features.sum() == 0:
             rpn_locs, rpn_scores, rois, roi_indices, anchor = \
                 self.faster_rcnn.rpn(features, img_size, scale)
             # Since batch size is one, convert variables to singular form
@@ -279,7 +280,8 @@ class BRFasterRcnnTrainer(nn.Module):
                 meter.add(loss_d[key])
         else:
             for key, meter in self.BR_meters.items():
-                meter.add(loss_d[key])
+                meter.add(loss_d[key].cpu())
+                #meter.add(loss_d[key])
 
     def reset_meters(self, BR=False):
         for key, meter in self.meters.items():

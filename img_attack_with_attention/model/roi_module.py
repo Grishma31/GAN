@@ -39,6 +39,7 @@ class RoI(Function):
         self.backward_fn = load_kernel('roi_backward', kernel_backward)
         self.outh, self.outw, self.spatial_scale = outh, outw, spatial_scale
 
+    @staticmethod
     def forward(self, x, rois):
         # NOTE: MAKE SURE input is contiguous too
         x = x.contiguous()
@@ -61,6 +62,7 @@ class RoI(Function):
                         stream=stream)
         return output
 
+    @staticmethod
     def backward(self, grad_output):
         ##NOTE: IMPORTANT CONTIGUOUS
         # TODO: input
@@ -87,9 +89,9 @@ class RoIPooling2D(t.nn.Module):
     def __init__(self, outh, outw, spatial_scale):
         super(RoIPooling2D, self).__init__()
         self.RoI = RoI(outh, outw, spatial_scale)
-
+    
     def forward(self, x, rois):
-        return self.RoI(x, rois)
+        return RoI.forward(self.RoI,x, rois)
 
 
 def test_roi_module():
