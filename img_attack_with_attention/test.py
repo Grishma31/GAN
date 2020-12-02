@@ -85,7 +85,7 @@ data_dir ='/u/g/r/grishma/Desktop/GAN/GAN-2/VOCdevkit/VOC2007'
 # data_dir = '/home/xingxing/liangsiyuan/data/video_dataset'
 # attacker_path = '/home/xlsy/Documents/CVPR19/final results/weights/attack_12211147_2500.path'
 attacker_path = 'checkpoints/10.path'
-save_path_HOME = '/home/xingxing/liangsiyuan/results/ssd_attack'
+save_path_HOME = '/u/g/r/grishma/Desktop/GAN/code/Adversarial-Attacks-for-Image-and-Video-Object-Detection/img_attack_with_attention/results/ssd_attack'
 # save_path_HOME = '/home/xingxing/liangsiyuan/results/ssd_attack_video'
 
 
@@ -309,6 +309,7 @@ if __name__ == '__main__':
     trainer = trainer.to(device)
     # trainer.load('/home/xlsy/Documents/CVPR19/final results/weights/fasterrcnn_img_0.701.pth')
     trainer.load('/u/g/r/grishma/Desktop/GAN/code/Adversarial-Attacks-for-Image-and-Video-Object-Detection/img_attack_with_attention/weights/fasterrcnn_12211511_0.701052458187_torchvision_pretrain.pth')
+    print("Something....... * * * * ** *")
     quality_list = [100, 90, 80, 70, 60, 50, 40, 30, 20]
     threshold = [0.7]
     adv_det_list = []
@@ -359,7 +360,7 @@ if __name__ == '__main__':
             # _bboxes, _labels, _scores = trainer.faster_rcnn.predict([ori_img_],\
             #         new_score=quality, visualize=True)
             before = time.time()
-            adv_img, perturb, distance = trainer.attacker.perturb_mD_img(img, save_perturb=save_path_perturb, rois=rois, roi_scores=roi_scores)
+            adv_img, perturb, distance = trainer.attacker.perturb(img, save_perturb=save_path_perturb, rois=rois, roi_scores=roi_scores)
             after = time.time()
             generate_time = after-before
             total_time = total_time + generate_time

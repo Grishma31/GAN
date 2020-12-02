@@ -65,7 +65,7 @@ def train(**kwargs):
         trainer.load(opt.load_path)
         print('from %s Load model parameters' % opt.load_path)
 
-    trainer.vis.text(dataset.db.label_names, win='labels')
+    #trainer.vis.text(dataset.db.label_names, win='labels')
     target_features_list = list()
 
     img_feature = trainer.faster_rcnn(torch.from_numpy(target_img).cuda())

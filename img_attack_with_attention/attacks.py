@@ -107,7 +107,8 @@ class Blade_runner(nn.Module):
 
         if self.cuda:
             self.generator.cuda()
-            self.generator = torch.nn.DataParallel(self.generator, device_ids=range(torch.cuda.device_count()))
+            device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+            self.generator = torch.nn.DataParallel(self.generator).to(device)
             cudnn.benchmark = True
 
         self.cg = cg

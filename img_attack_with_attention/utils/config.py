@@ -8,7 +8,7 @@ from pprint import pprint
 
 class Config:
     # data
-    voc_data_dir = '/home/liangsiyuan/data/VOCdevkit/VOC2007'
+    voc_data_dir = '/u/g/r/grishma/Desktop/GAN/GAN-2/VOCdevkit/VOC2007/'
     # voc_data_dir = '/home/xingxing/liangsiyuan/data/VOCdevkit/VOC2007'
     # voc_data_dir = '/home/xlsy/Desktop/Datasets/VOC2007'
     # voc_data_dir = '/home/xlsy/Desktop/Datasets/cat_VOC'
