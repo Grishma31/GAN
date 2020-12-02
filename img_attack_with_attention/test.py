@@ -22,7 +22,7 @@ from data.util import read_image
 from model import FasterRCNNVGG16
 from trainer import BRFasterRcnnTrainer
 from utils import array_tool as at
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 #
 VOC_BBOX_LABEL_NAMES = (
     'aeroplane',
@@ -80,7 +80,8 @@ VOC_BBOX_LABEL_NAMES = (
 # )
 
 
-data_dir = '/home/xingxing/liangsiyuan/data/VOCdevkit/VOC2007'
+#data_dir = '/home/xingxing/liangsiyuan/data/VOCdevkit/VOC2007'
+data_dir ='/u/g/r/grishma/Desktop/GAN/GAN-2/VOCdevkit/VOC2007'
 # data_dir = '/home/xingxing/liangsiyuan/data/video_dataset'
 # attacker_path = '/home/xlsy/Documents/CVPR19/final results/weights/attack_12211147_2500.path'
 attacker_path = 'checkpoints/10.path'
@@ -295,15 +296,19 @@ def img2jpg(img, img_suffix, quality):
 if __name__ == '__main__':
     layer_idx = 20
     _data = VOCBboxDataset(data_dir)
+    print("data loaaded")
     faster_rcnn = FasterRCNNVGG16()
     faster_rcnn.eval()
     attacker = attacks.Blade_runner()
     attacker.load(attacker_path)
     attacker.eval()
+    print("BRFasterRcnnTrainer train the model")
+    device = torch.device("cuda:0")
     trainer = BRFasterRcnnTrainer(faster_rcnn, attacker, \
-                                  layer_idx=layer_idx, attack_mode=True).cuda()
+                                  layer_idx=layer_idx, attack_mode=True)
+    trainer = trainer.to(device)
     # trainer.load('/home/xlsy/Documents/CVPR19/final results/weights/fasterrcnn_img_0.701.pth')
-    trainer.load('/home/xingxing/liangsiyuan/code/weights/fasterrcnn_12211511_0.701052458187_torchvision_pretrain.pth')
+    trainer.load('/u/g/r/grishma/Desktop/GAN/code/Adversarial-Attacks-for-Image-and-Video-Object-Detection/img_attack_with_attention/weights/fasterrcnn_12211511_0.701052458187_torchvision_pretrain.pth')
     quality_list = [100, 90, 80, 70, 60, 50, 40, 30, 20]
     threshold = [0.7]
     adv_det_list = []
@@ -341,7 +346,8 @@ if __name__ == '__main__':
             save_path = _data.save_dir + im_path_clone.split('/')[-1] + '.jpg'
             save_path_adv = _data.save_dir_adv + im_path_clone.split('/')[-1] + '.jpg'
             save_path_perturb = _data.save_dir_perturb + 'frcnn_perturb_' + im_path_clone.split('/')[-1] + '.jpg'
-
+            
+            print("Directory: " + _data.save_dir)
             if not os.path.exists(_data.save_dir):
                 os.makedirs(_data.save_dir)
             if not os.path.exists(_data.save_dir_adv):

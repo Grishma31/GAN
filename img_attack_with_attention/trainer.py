@@ -82,13 +82,15 @@ class BRFasterRcnnTrainer(nn.Module):
         self.loc_normalize_std = faster_rcnn.loc_normalize_std
 
         self.optimizer = self.faster_rcnn.get_optimizer()
-
-        self.vis = Visualizer(env=opt.env)
-
+        print("part-1 done")
+        #self.vis = Visualizer(env=opt.env)
+        print("part2 done")
         self.rpn_cm = ConfusionMeter(2)
         self.roi_cm = ConfusionMeter(21)
+        print("part-3 done")
         self.meters = {k: AverageValueMeter() for k in LossTuple._fields}
         self.BR_meters = {k: AverageValueMeter() for k in LossTupleBR._fields}
+        print("parameters set.")
 
     def forward(self, imgs, bboxes, labels, scale, attack=False):
         """Forward Faster R-CNN and calculate losses.
@@ -255,7 +257,9 @@ class BRFasterRcnnTrainer(nn.Module):
         return save_path
 
     def load(self, path, load_optimizer=True, parse_opt=False):
-        state_dict = t.load(path)
+        print("Loading the modules")
+        state_dict = t.load(path, map_location='cpu')
+        print("Module is loaded successfully.")
         if 'model' in state_dict:
             self.faster_rcnn.load_state_dict(state_dict['model'])
         else:

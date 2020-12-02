@@ -53,7 +53,7 @@ class Config:
 
     test_num = 1000
     # model
-    load_path = '/home/liangsiyuan/code/weights/fasterrcnn_12211511_0.701052458187_torchvision_pretrain.pth'
+    load_path = '/u/g/r/grishma/Desktop/GAN/code/Adversarial-Attacks-for-Image-and-Video-Object-Detection/img_attack_with_attention/weights/fasterrcnn_12211511_0.701052458187_torchvision_pretrain.pth'
     # load_path = '/home/xlsy/Desktop/fasterrcnn_img_0.701.pth'
     # load_path = '/home/xingxing/liangsiyuan/code/weights/fasterrcnn_12211511_0.701052458187_torchvision_pretrain.pth'
     load_attacker = '/home/xlsy/Desktop/experiments/target0_0.00005_20/weights/attack_10240645.path'

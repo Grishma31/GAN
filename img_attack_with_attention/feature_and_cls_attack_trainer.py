@@ -19,7 +19,7 @@ from data.dataset import preprocess, pytorch_normalze
 import attacks
 
 layer_idies = [15, 20]
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
 def store(model):
     """
