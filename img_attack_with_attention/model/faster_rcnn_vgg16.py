@@ -248,14 +248,7 @@ class VGG16RoIHead(nn.Module):
         # NOTE: important: yx->xy
         xy_indices_and_rois = indices_and_rois[:, [0, 2, 1, 4, 3]]
         indices_and_rois = t.autograd.Variable(xy_indices_and_rois.contiguous())
-        #indices_and_rois = xy_indices_and_rois.contiguous()
-        #print("Debug : GG : xy_indices_and_rois -- " + str(xy_indices_and_rois))
-        
-        #print("Debug : GG : indices_and_rois --" + str(indices_and_rois))
-        #print("Debug : GG : x -- " + str(x))
-        #print(type(self.roi).__name__)
         pool = self.roi(x, indices_and_rois)
-        #pool = RoIPooling2D.forward(self.roi,x, indices_and_rois)
         pool = pool.view(pool.size(0), -1)
         fc7 = self.classifier(pool)
         roi_cls_locs = self.cls_loc(fc7)

@@ -3,7 +3,6 @@
 
 from __future__ import division
 import numpy as np
-#import tensorflow as tf
 import pdb
 import cupy as cp
 import pdb
@@ -428,16 +427,8 @@ class ProposalCreator:
         min_size = self.min_size * scale
         hs = roi[:, 2] - roi[:, 0]
         ws = roi[:, 3] - roi[:, 1]
-        print("Debug: GG -- hs" + str(hs))
-        print("Debug: GG -- ws" + str(ws))
-        print(type(hs))
-        print(min_size)
-        print(type(min_size))
         if not isinstance(min_size, float):
             min_size=min_size.numpy()
-        #print(tf.cast(min_size,dtype=tf.float64))
-        #if isinstance(min_size, 'torch.Tensor'):
-         #   print("Yes it is tensor fuckers")
         keep = np.where((hs >= min_size) & (ws >= min_size))[0]
         roi = roi[keep, :]
         score = score[keep]

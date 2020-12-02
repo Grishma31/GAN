@@ -309,7 +309,6 @@ if __name__ == '__main__':
     trainer = trainer.to(device)
     # trainer.load('/home/xlsy/Documents/CVPR19/final results/weights/fasterrcnn_img_0.701.pth')
     trainer.load('/u/g/r/grishma/Desktop/GAN/code/Adversarial-Attacks-for-Image-and-Video-Object-Detection/img_attack_with_attention/weights/fasterrcnn_12211511_0.701052458187_torchvision_pretrain.pth')
-    print("Something....... * * * * ** *")
     quality_list = [100, 90, 80, 70, 60, 50, 40, 30, 20]
     threshold = [0.7]
     adv_det_list = []

@@ -46,7 +46,7 @@ def train(**kwargs):
                                   pin_memory=True,
                                   num_workers=opt.num_workers)
 
-    target_img_path = 'lokit_target_img.jpg'
+    target_img_path = 'target_img.jpg'
     target_img = read_image(target_img_path) / 255
     target_img = torch.from_numpy(pytorch_normalze(target_img))
     target_img = torch.unsqueeze(target_img, 0).numpy()
